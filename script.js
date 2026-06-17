@@ -41,4 +41,4 @@ function operate(a, operator, b)
     return result;
 }
 
-console.log(add(7, 5));
+console.log(operate(10, "*", 6));

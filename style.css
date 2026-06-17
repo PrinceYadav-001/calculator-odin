@@ -1,0 +1,47 @@
+/* master */
+.master-container
+{
+    display: inline-block;
+    flex-direction: column;
+    padding-left: 50px;
+    padding-top: 20px;
+}
+
+
+/* display */
+.display
+{
+    width : 100%;
+    height: 80px;
+    background-color: #777777;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+
+
+/* buttons */
+.btns-container
+{
+    display: flex;
+}
+
+.operator-btns-container
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.btn
+{
+    width: 70px;
+    height: 70px;
+    margin: 5px;
+    border-radius: 50%;
+    font-size: 25px;
+}
+
+.row
+{
+    display: flex;
+}
