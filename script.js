@@ -1,5 +1,9 @@
+//parameters
+let zeroDivText = "OOPS";
+
 //imp variables
 let state = 0; //0: num1, 1 : operator, 2: num2
+let isVolatile = false;
 let num1 = "";
 let operator = "";
 let num2 = "";
@@ -8,20 +12,21 @@ let num2 = "";
 let operators = ["+", "-", "×", "÷"];
 
 //selecting DOM
-let buttons = document.querySelectorAll(".btns-container button");
+let buttons = document.querySelectorAll(".btn");
 let display = document.querySelector(".display");
 
 //adding eventListeners
-buttons.forEach(button => button.addEventListener("click", (e) => HandleInput(e)));
+buttons.forEach(btn => btn.addEventListener("click", (e) => HandleInput(e)));
 
 //main
+document.querySelector(".ac-btn").addEventListener("click", () => reset());
+
 
 //functions
 function add(a, b)
 {
     return +a + +b;
 }
-
 
 function multiply(a, b)
 {
@@ -36,7 +41,10 @@ function subtract(a, b)
 function divide(a, b)
 {
     if (+b == 0)
-        return 'OOPS';
+    {
+        isVolatile = true;
+        return zeroDivText;
+    }
     else
         return +a / +b;
 }
@@ -61,12 +69,32 @@ function operate(a, operator, b)
             result = divide(a, b);
             break;
     }
-    return result;
+
+    if(result == zeroDivText)
+        return result;
+    else
+        return Number.parseFloat(result.toFixed(6));
+
 }
 
 function HandleInput(e)
 {
+
     let text = e.target.textContent;
+    console.log(text);
+
+    if(isVolatile)
+    {
+        if(display.textContent.trim() == zeroDivText)
+            reset();
+        else if (operators.includes(text))
+            state = 1;
+        else
+            reset();
+
+        isVolatile = false;
+    }
+
     switch(state)
     {
         case 0:
@@ -84,7 +112,6 @@ function HandleInput(e)
     display.textContent = fullText;
 }
 
-
 function ExecuteState0(text, substate = "execute")
 {
     //entry
@@ -99,13 +126,28 @@ function ExecuteState0(text, substate = "execute")
     //transition condition
     if(operators.includes(text))
     {
-        ExecuteState1(text, "entry");
-        state = 1;
-        return;
+        if(num1 === "")
+        {
+            return;
+        }
+        else
+        {
+            ExecuteState1(text, "entry");
+            state = 1;
+            return;
+        }
     }
 
     //execute
-    num1 = num1 + text;
+    if (isNaN(Number(text)) == false)
+        num1 = num1 + text;
+    else if (text == ".")
+    {
+        if(num1 === "")
+            num1 = "0.";
+        else
+            num1 += ".";
+    }
 }
 
 function ExecuteState1(text, substate = "execute")
@@ -126,7 +168,7 @@ function ExecuteState1(text, substate = "execute")
     }
 
     //execute
-    operator = text;
+    operator = text;    
 }
 
 function ExecuteState2(text, substate = "execute")
@@ -142,6 +184,7 @@ function ExecuteState2(text, substate = "execute")
     //transition condition
     if (text == "=")
     {
+        isVolatile = true;
         state = 0;
         ExecuteState0(text, "entry");
         return;
@@ -156,5 +199,23 @@ function ExecuteState2(text, substate = "execute")
     }
 
     //execute
-    num2 += text;
+    if (isNaN(Number(text)) == false)
+        num2 = num2 + text;
+    else if (text == ".")
+    {
+        if(num2 === "")
+            num2 = "0.";
+        else
+            num2 += ".";
+    }
+}
+
+
+function reset()
+{
+    display.textContent = "";
+    state = 0;
+    num1 = "";
+    operator = "";
+    num2 = "";
 }

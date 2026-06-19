@@ -11,7 +11,7 @@
 
 body
 {
-    font-family: "pokemon-solid","pokemon-hollow", 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
 }
 
 /* master */
@@ -27,18 +27,14 @@ body
 /* display */
 .display
 {
-    width : 100%;
     height: 120px;
-    /* background-color: #777777; */
-    background-color: #ffcb05;
-    border: 5px solid #3d7dca;
+    background-color: #777777;
 
     border-radius: 8px;
     margin-bottom: 10px;
     padding-right: 25px;
 
-    /* color: whitesmoke; */
-    color:#003a70;
+    color: whitesmoke;
     font-size: 40px;
     text-align: end;
     display: flex;
@@ -62,15 +58,13 @@ body
 
 .btn
 {
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
     width: 100px;
     height: 100px;
     margin: 7px;
     border-radius: 50%;
-    font-size: 30px;
+    font-size: 40px;
 
-    border: 5px solid #3d7dca;
-    background-color: #ffcb05;
-    color : #003a70;
 }
 
 .row
