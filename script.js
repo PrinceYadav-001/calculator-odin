@@ -7,9 +7,12 @@ let isVolatile = false;
 let num1 = "";
 let operator = "";
 let num2 = "";
+let dotInNum1 = false;
+let dotInNum2 = false;
 
 //setup
 let operators = ["+", "-", "×", "÷"];
+let validKeys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "+", "-", "/", "*", "=", "."];
 
 //selecting DOM
 let buttons = document.querySelectorAll(".btn");
@@ -126,6 +129,7 @@ function ExecuteState0(text, substate = "execute")
     //transition condition
     if(operators.includes(text))
     {
+        dotInNum1 = false;
         if(num1 === "")
         {
             return;
@@ -141,12 +145,13 @@ function ExecuteState0(text, substate = "execute")
     //execute
     if (isNaN(Number(text)) == false)
         num1 = num1 + text;
-    else if (text == ".")
+    else if (text == "." && dotInNum1 == false)
     {
         if(num1 === "")
             num1 = "0.";
         else
             num1 += ".";
+        dotInNum1 = true;
     }
 }
 
@@ -184,6 +189,7 @@ function ExecuteState2(text, substate = "execute")
     //transition condition
     if (text == "=")
     {
+        dotInNum2 = false;
         isVolatile = true;
         state = 0;
         ExecuteState0(text, "entry");
@@ -191,6 +197,7 @@ function ExecuteState2(text, substate = "execute")
     }
     else if (operators.includes(text))
     {
+        dotInNum2 = false;
         state = 0;
         ExecuteState0(text, "entry");
         state = 1;
@@ -201,8 +208,9 @@ function ExecuteState2(text, substate = "execute")
     //execute
     if (isNaN(Number(text)) == false)
         num2 = num2 + text;
-    else if (text == ".")
+    else if (text == "." && dotInNum2 == false)
     {
+        dotInNum2 = true;
         if(num2 === "")
             num2 = "0.";
         else
@@ -218,4 +226,6 @@ function reset()
     num1 = "";
     operator = "";
     num2 = "";
+    dotInNum1 = false;
+    dotInNum2 = false;
 }
