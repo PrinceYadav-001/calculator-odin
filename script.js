@@ -7,78 +7,20 @@ let isVolatile = false;
 let num1 = "";
 let operator = "";
 let num2 = "";
-let dotInNum1 = false;
-let dotInNum2 = false;
 
 //setup
 let operators = ["+", "-", "×", "÷"];
 let validKeys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "+", "-", "/", "*", "=", "."];
 
 //selecting DOM
-let buttons = document.querySelectorAll(".btn");
-let display = document.querySelector(".display");
+const buttons = document.querySelectorAll(".btn");
+const display = document.querySelector(".display");
 
 //adding eventListeners
 buttons.forEach(btn => btn.addEventListener("click", (e) => HandleInput(e)));
-
-//main
 document.querySelector(".ac-btn").addEventListener("click", () => reset());
 
 
-//functions
-function add(a, b)
-{
-    return +a + +b;
-}
-
-function multiply(a, b)
-{
-    return +a * +b;
-}
-
-function subtract(a, b)
-{
-    return +a - +b;
-}
-
-function divide(a, b)
-{
-    if (+b == 0)
-    {
-        isVolatile = true;
-        return zeroDivText;
-    }
-    else
-        return +a / +b;
-}
-
-function operate(a, operator, b)
-{
-    a = +a;
-    b = +b;
-    let result = "Invalid Operator";
-
-    switch(operator){
-        case "+":
-            result = add(a, b);
-            break;
-        case "-":
-            result = subtract(a, b);
-            break;
-        case "×":
-            result = multiply(a, b);
-            break;
-        case "÷":
-            result = divide(a, b);
-            break;
-    }
-
-    if(result == zeroDivText)
-        return result;
-    else
-        return Number.parseFloat(result.toFixed(6));
-
-}
 
 function HandleInput(e)
 {
@@ -117,8 +59,14 @@ function HandleInput(e)
 
 function ExecuteState0(text, substate = "execute")
 {
+    if (text === ".")
+    {
+        num1 = AddDot(num1);
+        return;
+    }
+
     //entry
-    if (substate == "entry")
+    if (substate === "entry")
     {
         num1 = operate(num1, operator, num2).toString();
         operator = "";
@@ -129,7 +77,6 @@ function ExecuteState0(text, substate = "execute")
     //transition condition
     if(operators.includes(text))
     {
-        dotInNum1 = false;
         if(num1 === "")
         {
             return;
@@ -143,20 +90,15 @@ function ExecuteState0(text, substate = "execute")
     }
 
     //execute
-    if (isNaN(Number(text)) == false)
-        num1 = num1 + text;
-    else if (text == "." && dotInNum1 == false)
+    if (isNaN(Number(text)) === false)
     {
-        if(num1 === "")
-            num1 = "0.";
-        else
-            num1 += ".";
-        dotInNum1 = true;
+        num1 = num1 + text;
     }
 }
 
 function ExecuteState1(text, substate = "execute")
 {
+
     //entry
     if(substate == "entry")
     {
@@ -178,6 +120,11 @@ function ExecuteState1(text, substate = "execute")
 
 function ExecuteState2(text, substate = "execute")
 {
+    if (text == ".")
+    {
+        num2 = AddDot(num2);
+        return;
+    }
 
     //entry
     if(substate == "entry")
@@ -189,7 +136,6 @@ function ExecuteState2(text, substate = "execute")
     //transition condition
     if (text == "=")
     {
-        dotInNum2 = false;
         isVolatile = true;
         state = 0;
         ExecuteState0(text, "entry");
@@ -197,7 +143,6 @@ function ExecuteState2(text, substate = "execute")
     }
     else if (operators.includes(text))
     {
-        dotInNum2 = false;
         state = 0;
         ExecuteState0(text, "entry");
         state = 1;
@@ -207,17 +152,13 @@ function ExecuteState2(text, substate = "execute")
 
     //execute
     if (isNaN(Number(text)) == false)
-        num2 = num2 + text;
-    else if (text == "." && dotInNum2 == false)
     {
-        dotInNum2 = true;
-        if(num2 === "")
-            num2 = "0.";
-        else
-            num2 += ".";
+        num2 = num2 + text;
     }
 }
 
+
+//functions
 
 function reset()
 {
@@ -226,6 +167,72 @@ function reset()
     num1 = "";
     operator = "";
     num2 = "";
-    dotInNum1 = false;
-    dotInNum2 = false;
+}
+
+function operate(a, operator, b)
+{
+    a = +a;
+    b = +b;
+    let result = "Invalid Operator";
+
+    switch(operator){
+        case "+":
+            result = add(a, b);
+            break;
+        case "-":
+            result = subtract(a, b);
+            break;
+        case "×":
+            result = multiply(a, b);
+            break;
+        case "÷":
+            result = divide(a, b);
+            break;
+    }
+
+    if(result === zeroDivText)
+        return result;
+    else
+        return Number.parseFloat(result.toFixed(6));
+}
+
+function AddDot(num)
+{
+    if(num.includes("."))
+    {
+        return num;
+    }
+    else if(num === "")
+        return "0.";
+    else
+        return num + ".";
+}
+
+
+
+//helper functions
+function add(a, b)
+{
+    return +a + +b;
+}
+
+function multiply(a, b)
+{
+    return +a * +b;
+}
+
+function subtract(a, b)
+{
+    return +a - +b;
+}
+
+function divide(a, b)
+{
+    if (+b == 0)
+    {
+        isVolatile = true;
+        return zeroDivText;
+    }
+    else
+        return +a / +b;
 }
