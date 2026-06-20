@@ -45,7 +45,7 @@ function HandleInput(text)
         return;
     }
 
-    if(isVolatile)
+    if(isVolatile && text !== "=")
     {
         if(display.textContent.trim() === zeroDivText)
             reset();

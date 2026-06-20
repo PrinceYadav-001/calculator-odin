@@ -1,13 +1,3 @@
-/* fonts */
-@font-face {
-    font-family: "pokemon-solid";
-    src: url(fonts/Pokemon\ Solid.ttf);
-}
-
-@font-face {
-    font-family: "pokemon-hollow";
-    src: url(fonts/Pokemon\ Hollow.ttf);
-}
 
 body
 {
