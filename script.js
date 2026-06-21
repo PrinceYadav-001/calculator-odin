@@ -1,5 +1,6 @@
 //parameters
 let zeroDivText = "OOPS";
+const MAX_LENGTH = 18;
 
 //imp variables
 let state = 0; //0: num1, 1 : operator, 2: num2
@@ -10,7 +11,7 @@ let num2 = "";
 
 //setup
 let operators = ["+", "-", "×", "÷"];
-let validKeys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "+", "-", "×", "÷", "=", ".", "Backspace"];
+let validKeys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "+", "-", "×", "÷", "=", ".", "CE"];
 
 //selecting DOM
 const buttons = document.querySelectorAll(".btn");
@@ -27,6 +28,9 @@ function HandleInput(text)
     //mapping keys to value
     if(text === "Enter")
         text = "=";
+    
+    if (text === "Backspace")
+        text = "CE";
 
     if(text === "/")
         text = "÷";
@@ -39,7 +43,7 @@ function HandleInput(text)
         return;
     }
 
-    if (text == "Backspace")
+    if (text === "CE")
     {
         HandleBackspace();
         return;
@@ -224,6 +228,12 @@ function clearDisplay()
 function UpdateDisplay()
 {
     let fullText = num1 + " " + operator + " " + num2;
+    while(fullText.trim().length > MAX_LENGTH)
+    {
+        HandleBackspace();
+        fullText = num1 + " " + operator + " " + num2;
+    }
+
     display.textContent = fullText;
 }
 
