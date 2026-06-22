@@ -1,23 +1,35 @@
+html, body
+{
+    height: 100%;
+}
 
 body
 {
     font-family: "Roboto", Arial, Helvetica, sans-serif;
+    margin: 0px;
 }
 
 /* master */
 .master-container
 {
-    display: inline-block;
-    flex-direction: column;
-    padding-left: 50px;
-    padding-top: 20px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calc-body
+{
+    border: 3px solid black;
+    padding: 15px;
+    border-radius: 8px;
 }
 
 
 /* display */
 .display
 {
-    height: 120px;
+    height: 130px;
     background-color: #777777;
 
     border-radius: 8px;
@@ -49,13 +61,20 @@ body
 .btn
 {
     font-family: "Roboto", Arial, Helvetica, sans-serif;
-    width: 100px;
-    height: 100px;
-    margin: 7px;
+    width: 90px;
+    height: 90px;
+    margin: 5px;
     border-radius: 50%;
     font-size: 40px;
 
 }
+
+/* .operator-btns-container > .op-btn, .equalsBtn
+{
+    background-color: #333333;
+    color: white;
+} */
+
 
 .row
 {
