@@ -1,6 +1,6 @@
 //parameters
 let zeroDivText = "OOPS";
-const MAX_LENGTH = 18;
+const MAX_LENGTH = 15;
 
 //imp variables
 let state = 0; //0: num1, 1 : operator, 2: num2
