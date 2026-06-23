@@ -23,6 +23,7 @@ body
     border: 3px solid black;
     padding: 15px;
     border-radius: 8px;
+    background-color: rgb(200, 200, 200);
 }
 
 
@@ -33,7 +34,7 @@ body
     background-color: #777777;
 
     border-radius: 8px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     padding-right: 25px;
 
     color: rgb(245, 245, 245);
@@ -67,6 +68,14 @@ body
     border-radius: 50%;
     font-size: 40px;
 
+    border : none;
+    box-shadow: 0px 0px 3px 1px rgb(110, 110, 110);
+    transition: font-size 0.15s;
+}
+
+.btn:active
+{
+    font-size: 37.5px;
 }
 
 /* .operator-btns-container > .op-btn, .equalsBtn
