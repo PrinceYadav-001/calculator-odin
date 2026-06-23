@@ -18,9 +18,16 @@ const buttons = document.querySelectorAll(".btn");
 const display = document.querySelector(".display");
 
 //adding eventListeners
-buttons.forEach(btn => btn.addEventListener("click", (e) => HandleInput(e.target.textContent)));
+buttons.forEach(btn => btn.addEventListener("click", (e) => {
+    HandleInput(e.target.textContent);
+    e.target.blur();
+}));
+
 document.addEventListener("keydown", (e) => HandleInput(e.key));
-document.querySelector(".ac-btn").addEventListener("click", () => reset());
+document.querySelector(".ac-btn").addEventListener("click", () => {
+    reset();
+    e.target.blur();
+});
 
 
 function HandleInput(text)
